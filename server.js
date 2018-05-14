@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // parse application/json
 app.use(bodyParser.json())
  
-
+require('./app/routing/api-routes.js')(app);
 require('./app/routing/html-routes.js')(app);
 
 app.listen(PORT, function(){
