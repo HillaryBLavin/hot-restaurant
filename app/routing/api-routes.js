@@ -20,4 +20,12 @@ module.exports = function (app) {
             
         }
     })
+
+    app.post('/api/clear', () => {
+        tableData = []
+        waitListData = []
+
+        console.log(tableData)
+        console.log(waitListData)
+    })
 }

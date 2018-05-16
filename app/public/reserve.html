@@ -69,7 +69,7 @@
 
 	    <footer class="footer">
 	      <div class="container">
-	        <p><a href="/api/tables">API Table Link</a> | <a href="/api/waitlist">API Wait List</a> </p>
+	        <p><a href="#" id="clear">Clear Table</a> | <a href="/api/tables">API Table Link</a> | <a href="/api/waitlist">API Wait List | <a href="https://github.com/HillaryBLavin/hot-restaurant">Git Repo</a></p>
 	      </div>
 	    </footer>
 
@@ -78,18 +78,41 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 		$(".submit").on("click",() => {
+			event.preventDefault();
 			var newReservation = {
 				customerName: $('#reserve_name').val().trim(),
-				phoneNumber: $('reserve_phone').val().trim(),
-				customerEmail: $('reserve_email').val().trim(),
-				customerID: $('#reserver_uniqueID').val().trim()
-			}
+				phoneNumber: $('#reserve_phone').val().trim(),
+				customerEmail: $('#reserve_email').val().trim(),
+				customerID: $('#reserve_uniqueID').val()
+			};
 			
 			console.log(newReservation)
 
-			return false;
-		
-		})
+
+			var currentURL = window.location.origin
+				
+			$.post("/api/tables", newReservation,
+        (data) => {
+					
+          // If a table is available... tell user they are booked.
+          if (data) {
+            alert("Yay! You are officially booked!");
+          }
+
+          // If a table is available... tell user they on the waiting list.
+          else {
+            alert("Sorry you are on the wait list");
+          }
+
+          // Clear the form when submitting
+          $("#reserve_name").val("");
+          $("#reserve_phone").val("");
+          $("#reserve_email").val("");
+          $("#reserve_uniqueID").val("");
+
+        });
+
+	})
 </script>
 </body>
 </html>
